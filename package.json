@@ -1,0 +1,36 @@
+{
+  "name": "desafio-qa-automacao",
+  "version": "1.0.0",
+  "description": "Projeto de automação QA - API (Postman/Newman) e UI (Cypress + BDD Cucumber) para o e-commerce Demoblaze",
+  "author": "Bruna Karoline Ferraz",
+  "license": "ISC",
+  "scripts": {
+    "test": "cypress run",
+    "test:ui:open": "cypress open",
+    "test:ui:conta": "cypress run --spec cypress/e2e/criacao_conta.feature",
+    "test:ui:carrinho": "cypress run --spec cypress/e2e/carrinho.feature",
+    "test:api": "newman run postman/demoblaze_api_collection.json -e postman/demoblaze_environment.json --delay-request 300 --reporters cli,htmlextra --reporter-htmlextra-export reports/newman/api-report.html",
+    "test:all": "npm run test:api && npm run test"
+  },
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.1.2",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
+    "cypress": "^13.17.0",
+    "esbuild": "^0.21.5",
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "cypress/support/step_definitions/**/*.js"
+    ],
+    "json": {
+      "enabled": true,
+      "output": "reports/cucumber/cucumber-report.json"
+    },
+    "html": {
+      "enabled": true,
+      "output": "reports/cucumber/cucumber-report.html"
+    }
+  }
+}
